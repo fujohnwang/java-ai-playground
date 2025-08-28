@@ -87,8 +87,24 @@ public class ImageEmbeddingDemo implements AutoCloseable {
         String modelPath = "/Users/fq/workspace.python/optimum-runner/onnx/mobilenet-v2/model.onnx";
         try (ImageEmbeddingDemo imageEmbedding = new ImageEmbeddingDemo(modelPath)) {
             // Generate the embedding
-            float[] embedding = imageEmbedding.embed("/Users/fq/福匠素材库.library/images/MESGARN2V4E0W.info/Output for the Skill Character Mix.png");
+//            System.out.println("warm up...");
+//            for (var i = 0; i < 100; i++) {
+//                imageEmbedding.embed("/Users/fq/福匠素材库.library/images/MESGARN2V4E0W.info/Output for the Skill Character Mix.png");
+//            }
+//
+//            System.out.println("start embed...");
+//            long start = System.currentTimeMillis();
+//            for (var i = 0; i < 10000; i++) {
+//                imageEmbedding.embed("/Users/fq/福匠素材库.library/images/MESGARN2V4E0W.info/Output for the Skill Character Mix.png");
+//            }
+//            long end = System.currentTimeMillis();
+//            System.out.printf("it takes %s milli to calculate 10000 embeddings of image, avg=%s ms/image", String.valueOf(end - start), String.valueOf((end - start) / 10000));
+//            // it takes 447455 milli to calculate 10000 embeddings of image, avg=44 ms/image执行模型推理...
+
+//            float[] embedding = imageEmbedding.embed("/Users/fq/福匠素材库.library/images/MESGARN2V4E0W.info/Output for the Skill Character Mix.png");
 //            float[] embedding = imageEmbedding.embed("/Users/fq/福匠素材库.library/images/MESGBS2F1QQ1X.info/小黄人 minion joker.png");
+
+            float[] embedding = imageEmbedding.embed("/Users/fq/福匠素材库.library/images/MATN4MON5564I.info/Clipboard - 2025-05-18 20.36.39.png");
 
 
             System.out.println("Successfully generated embedding.");
