@@ -126,7 +126,7 @@ public class NativeOnnxInference {
                             System.out.println("最大值: " + max);
                             System.out.println("平均值: " + mean);
                             System.out.println("非零值数量: " + nonZeroCount + " / " + flattened.length);
-                            System.out.println("零值比例: " + String.format("%.2f%%", (flattened.length - nonZeroCount) * 100.0 / flattened.length));
+                            System.out.println("零值比例: " + String.format("%%.2f%%", (flattened.length - nonZeroCount) * 100.0 / flattened.length));
                             
                             // 打印前20个值
                             System.out.println("前20个输出值: " + Arrays.toString(Arrays.copyOf(flattened, Math.min(20, flattened.length))));
@@ -153,19 +153,10 @@ public class NativeOnnxInference {
                             
                             System.out.println("\n=== 不同的Embedding提取方法 ===");
                             
-                            // 方法1: 全局平均池化 (最常用的方法)
-                            float[] globalAvgPooling = new float[1280];
-                            for (int c = 0; c < 1280; c++) {
-                                float channelSum = 0;
-                                for (int h = 0; h < 7; h++) {
-                                    for (int w = 0; w < 7; w++) {
-                                        channelSum += output4D[0][c][h][w];
-                                    }
-                                }
-                                globalAvgPooling[c] = channelSum / (7 * 7); // 平均值
-                            }
-                            
-                            // 方法2: 全局最大池化
+                            // --- 调用外部工具类进行全局平均池化 ---
+                            float[] globalAvgPooling = ImageEmbeddingExtractor.extractWithGlobalAvgPooling(result);
+
+                            // 方法2: 全局最大池化 (保留这里的实现用于对比)
                             float[] globalMaxPooling = new float[1280];
                             for (int c = 0; c < 1280; c++) {
                                 float channelMax = Float.MIN_VALUE;
@@ -186,7 +177,7 @@ public class NativeOnnxInference {
                             }
                             
                             // 统计不同方法的结果
-                            System.out.println("1. 全局平均池化 (1280维):");
+                            System.out.println("1. 全局平均池化 (1280维) - [来自 ImageEmbeddingExtractor]:");
                             printEmbeddingStats("   GAP", globalAvgPooling);
                             
                             System.out.println("2. 全局最大池化 (1280维):");
@@ -231,8 +222,8 @@ public class NativeOnnxInference {
         float mean = sum / embedding.length;
         
         System.out.println(name + " - 维度: " + embedding.length + 
-                          ", 范围: [" + String.format("%.4f", min) + ", " + String.format("%.4f", max) + "]" +
-                          ", 均值: " + String.format("%.4f", mean) + 
+                          ", 范围: [" + String.format("%%.4f", min) + ", " + String.format("%%.4f", max) + "]" + 
+                          ", 均值: " + String.format("%%.4f", mean) + 
                           ", 非零: " + nonZeroCount + "/" + embedding.length);
         System.out.println(name + " - 前5个值: " + Arrays.toString(Arrays.copyOf(embedding, Math.min(5, embedding.length))));
     }
