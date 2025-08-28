@@ -2,7 +2,11 @@
 
 Sample project of playing with DJL and onnx models
 
-
+> NOTE
+> 
+> 关于DJL做image embedding得路线没跑通
+> 官方repo里倒是有个例子， 用的CLIP模型： https://github.com/deepjavalibrary/djl/blob/master/examples/src/main/java/ai/djl/examples/inference/clip/ImageTranslator.java
+> 
 
 
 
